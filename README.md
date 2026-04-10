@@ -27,5 +27,5 @@ src/bot/
 | `WEBHOOK_URL` | Web domain + `/webhook` |
 | `WEBHOOK_SECRET` | Random secret string |
 | `OPENAI_API_KEY` | OpenAI API key |
-| `OPENAI_MODEL` | e.g. `gpt-image-1` |
+| `OPENAI_MODEL` | e.g. `gpt-5.4` |
 | `CHAT_ID` | Your Telegram chat ID |
