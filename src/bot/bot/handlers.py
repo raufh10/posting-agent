@@ -1,4 +1,6 @@
 import logging
+import base64
+from io import BytesIO
 from telegram import Update
 from telegram.ext import ContextTypes
 from bot.openai.client import get_response
@@ -22,12 +24,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     result = await get_response(text)
 
     if result["image_b64"]:
+      image_bytes = BytesIO(base64.b64decode(result["image_b64"]))
+      image_bytes.name = "image.png"
       await message.reply_photo(
-        photo=result["image_b64"],
+        photo=image_bytes,
         caption=result["text"],
       )
+
     elif result["text"]:
       await message.reply_text(result["text"])
+
     else:
       await message.reply_text("Sorry, I couldn't generate a response.")
 
