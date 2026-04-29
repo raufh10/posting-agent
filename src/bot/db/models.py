@@ -1,8 +1,14 @@
 from datetime import datetime
 from decimal import Decimal
+from enum import Enum
 from uuid import UUID
 
 from pydantic import BaseModel
+
+class PostStatus(str, Enum):
+  unprocessed = "unprocessed"
+  posted = "posted"
+  dropped = "dropped"
 
 class NewsPost(BaseModel):
   id: UUID
@@ -16,7 +22,7 @@ class NewsPost(BaseModel):
   posted_at: datetime | None = None
   created_at: datetime | None = None
   metadata: dict | None = None
-  is_posted: bool | None = None
+  status: PostStatus | None = None
 
   class Config:
     from_attributes = True
