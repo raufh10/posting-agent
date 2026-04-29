@@ -1,29 +1,38 @@
-from cache.models import SessionCache
-from export.client import get_person_urn
+from uuid import UUID
+
+from cache.models import NewsItem, SessionCache
+from cache.temp import set_session
+from export.client import get_person_urn, get_token
 from export.uploader import register_image_upload, upload_image
 from export.poster import publish_post
 
-async def export_to_linkedin(
+async def export_news_item(
   session: SessionCache,
-  token: str,
-  image_path: str | None = None,
+  item_id: UUID,
 ) -> str:
   """
-  Main entry point.
-  - token: OAuth2 access token obtained via get_oauth_url -> exchange_code_for_token
-  - image_path: optional path to image file to attach
+  Export a single NewsItem from session by its id.
+  Uploads image if image_path set and image_urn not yet registered.
   Returns post URN.
   """
-  person_urn = await get_person_urn(token)
+  item = next((n for n in session.news if n.id == item_id), None)
+  if not item:
+    raise ValueError(f"NewsItem {item_id} not found in session")
 
-  asset_urn: str | None = None
-  if image_path:
+  token = session.token
+  person_urn = session.person_urn
+
+  # Upload image if path exists but urn not yet registered
+  if item.image_path and not item.image_urn:
     upload_url, asset_urn = await register_image_upload(token, person_urn)
-    await upload_image(upload_url, token, image_path)
+    await upload_image(upload_url, token, item.image_path)
+    item.image_urn = asset_urn
+    await set_session(session)
 
-  return await publish_post(
+  post_urn = await publish_post(
     token=token,
     person_urn=person_urn,
-    text=session.post_draft,
-    asset_urn=asset_urn,
+    text=item.draft,
+    asset_urn=item.image_urn,
   )
+  return post_urn

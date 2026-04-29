@@ -43,7 +43,6 @@ async def publish_post(
   text: str,
   asset_urn: str | None = None,
 ) -> str:
-  """Returns created post URN."""
   async with httpx.AsyncClient() as client:
     r = await client.post(
       f"{LINKEDIN_API}/ugcPosts",
