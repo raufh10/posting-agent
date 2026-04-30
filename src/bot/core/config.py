@@ -8,24 +8,30 @@ class Settings(BaseSettings):
   )
 
   # Bot
-  #bot_name: str = "imgen-bot"
-  #telegram_bot_token: str
-  #webhook_url: str
-  #webhook_secret: str
-  #chat_id: int
+  telegram_bot_token: str
+  webhook_url: str
+  webhook_secret: str
+  admin_user_id: int
+
+  # LinkedIn
+  person_id: str
+  token: str
 
   # OpenAI
-  #openai_api_key: str
-  #openai_model: str
-  #openai_img_model: str
+  openai_api_key: str
+  default_model: str
+  image_model: str
+
+  # Database
+  database_url: str
+  redis_url: str
 
   # Server
-  #host: str = "0.0.0.0"
-  #port: int = 8000
-  #debug: bool = False
+  host: str = "0.0.0.0"
+  port: int = 8000
 
   # Environment
-  environment: str
+  environment: str = "development"
 
   @property
   def is_production(self) -> bool:

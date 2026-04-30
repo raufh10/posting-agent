@@ -19,14 +19,7 @@ class LLMClient:
       instructions=ARTIST_SYSTEM_PROMPT,
       model=settings.default_model,
       tools=[IMAGE_GEN_TOOL],
-      output_type=ImageResult,
-      tool_params={
-        "store": True,
-        "metadata": {
-          "type": "image_generation",
-          "retention": "24h"
-        }
-      }
+      output_type=ImageResult
     )
 
   def get_designer(self) -> Agent:

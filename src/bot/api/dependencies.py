@@ -1,8 +1,7 @@
-from fastapi import Request, HTTPException
-from bot.core.config import settings
+from fastapi import HTTPException, Request
+from core.config import settings
 
 async def verify_webhook_secret(request: Request) -> None:
   token = request.headers.get("X-Telegram-Bot-Api-Secret-Token")
-
-  if token != settings.webhook_secret:
+  if token != settings.WEBHOOK_SECRET:
     raise HTTPException(status_code=403, detail="Invalid secret token")
