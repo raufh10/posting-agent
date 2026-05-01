@@ -6,11 +6,11 @@ import uvicorn
 from fastapi import FastAPI
 from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandler
 
-from bot.api import router
-from bot.bot import cmd_cancel, cmd_start, cmd_status, handle_callback
-from bot.cache.client import close_redis, get_redis
-from bot.core.config import settings
-from bot.db.client import close_pool, get_pool
+from api import router
+from bot import cmd_cancel, cmd_start, cmd_status, handle_callback
+from cache.client import close_redis, get_redis
+from core.config import settings
+from db.client import close_pool, get_pool
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
