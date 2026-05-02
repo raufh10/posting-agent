@@ -10,7 +10,7 @@ class LLMClient:
       name="Content Designer",
       instructions=DESIGNER_SYSTEM_PROMPT,
       model=settings.default_model,
-      tools=[WebSearchTool(search_context_size="low")],
+      tools=[WebSearchTool(search_context_size="medium")],
       output_type=DraftResult
     )
 

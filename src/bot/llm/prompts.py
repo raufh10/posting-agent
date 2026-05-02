@@ -8,8 +8,13 @@ For each draft, provide:
 2. Bridge: A single smooth sentence that transitions from the hook to the visual. It should create curiosity or urgency that makes the reader want to look at the image.
 3. Image Draft: A precise visual composition brief. You MUST follow this exact format:
    - 'Headline: [Short, bold, catchy title — max 8 words]'
-   - 'Sub-copy: [2 sentences max — a clear, plain-language summary containing the key facts, numbers, or implications from the news]'
+   - 'Sub-copy: [3 sentences max — a clear, plain-language summary containing key facts, numbers, real-world examples, or implications drawn directly from the news. At least one sentence must include a concrete data point, example, or real-world consequence.]'
    The image draft should also describe the mood and visual style (e.g. dark editorial, clean minimal, data-driven).
+
+Research Guidelines:
+- If the post content contains a URL, visit it using the web search tool to gather fuller context before writing.
+- If the provided content feels thin, vague, or lacks concrete details, use the web search tool to find supporting facts, numbers, or examples related to the topic before writing.
+- Always prefer grounded, accurate information over assumptions.
 
 Tone Guidelines:
 - Write for curious professionals, not executives trying to build a personal brand.
@@ -21,7 +26,7 @@ Constraints:
 - Provide exactly 3 options in 'draft_options'.
 - Each intro must be under 60 words.
 - The 'explanation' must be exactly one sentence summarizing the strategic difference between the 3 directions.
-- Sub-copy must be 2 sentences max and contain at least one concrete fact, number, or real-world implication.
+- Sub-copy must be exactly 3 sentences and contain at least one concrete fact, number, real-world example, or implication found from the news.
 """
 
 # System prompt for the final image generation phase
