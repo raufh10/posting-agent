@@ -157,7 +157,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     elif data == "image:approve":
       await query.message.reply_text("✅ Image approved.")
       await set_state(user_id, State.generating_drafts)
-      await _generate_next_draft(query.message)
+      await _generate_next_draft(query.message, session, user_id, context)
 
   # ── posting ──
   elif data.startswith("post:") and state == State.posting:
@@ -202,7 +202,7 @@ async def _generate_next_draft(message, session, user_id: int, context) -> None:
 
   await message.reply_text(
     f"📝 Pick a draft:\n\n{item.draft}",
-    parse_mode="Markdown",
+    parse_mode="HTML",
     reply_markup=draft_pick_kb(),
   )
 
