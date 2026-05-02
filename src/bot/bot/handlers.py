@@ -126,11 +126,12 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
       await query.edit_message_text("⚠️ Item not found.")
       return
 
+    context.user_data["draft_index"] = draft_index
+
     await query.edit_message_text(f"🎨 Generating image for option {draft_index+1}...")
     await set_state(user_id, State.generating_image)
 
     item = await run_generate_image(item, draft_index)
-    # update item in session
     for i, n in enumerate(session.news):
       if n.id == item.id:
         session.news[i] = item
@@ -145,7 +146,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     if data == "image:redo":
       await query.message.reply_text("🔄 Regenerating image...")
-      draft_index = context.user_data.get("draft_index", 0)
+      draft_index = context.user_data.get("draft_index", 0)  # now always correct
       item = await run_generate_image(item, draft_index)
       for i, n in enumerate(session.news):
         if n.id == item.id:
@@ -156,7 +157,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     elif data == "image:approve":
       await query.message.reply_text("✅ Image approved.")
       await set_state(user_id, State.generating_drafts)
-      await _generate_next_draft(query.message, session, user_id, context)
+      await _generate_next_draft(query.message
 
   # ── posting ──
   elif data.startswith("post:") and state == State.posting:
