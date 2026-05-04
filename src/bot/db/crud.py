@@ -15,7 +15,7 @@ async def get_unposted() -> list[NewsPost]:
   pool = await get_pool()
   rows = await pool.fetch(
     """
-    SELECT id, subreddit, title, content, url, ups, upvote_ratio, posted_at
+    SELECT id, subreddit, title, content, url, ups, upvote_ratio, posted_at, metadata
     FROM news_posts
     WHERE status = 'unprocessed'
     AND ups >= 50
