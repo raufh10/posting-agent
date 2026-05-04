@@ -43,17 +43,24 @@ async def _send_news_item(message, session, index: int) -> None:
   item = session.news[index]
   post = item.original
   total = len(session.news)
+
+  permalink = None
+  if post.metadata and isinstance(post.metadata, dict):
+    permalink = post.metadata.get("permalink")
+
+  reddit_url = f"https://reddit.com{permalink}" if permalink else post.url or ""
+
   text = (
     f"📰 <b>{index+1}/{total}</b>\n\n"
     f"<b>{post.title}</b>\n\n"
     f"r/{post.subreddit} · ⬆️ {post.ups}\n"
-    f"{post.content[:200] or ''}\n"
-    f"{post.url or ''}"
+    f"{post.content[:200] if post.content else ''}\n\n"
+    f"🔗 <a href='{reddit_url}'>View on Reddit</a>"
   )
   await message.reply_text(
     text,
     parse_mode="HTML",
-    reply_markup=news_review_kb(),
+    reply_markup=news_review_kb()
   )
 
 @admin_only

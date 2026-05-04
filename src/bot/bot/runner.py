@@ -46,6 +46,34 @@ async def run_generate_draft(item: NewsItem) -> NewsItem:
   )
   return item
 
+async def run_generate_draft(item: NewsItem) -> NewsItem:
+  prompt = (
+    f"Title: {item.original.title}\n"
+    f"Content: {item.original.content or ''}\n"
+    f"Subreddit: {item.original.subreddit}\n"
+    f"Upvotes: {item.original.ups}"
+  )
+  result = await Runner.run(llm.get_designer(), prompt)
+  drafts = result.final_output.draft_options
+  item.drafts = drafts
+
+  permalink = None
+  if item.original.metadata and isinstance(item.original.metadata, dict):
+    permalink = item.original.metadata.get("permalink")
+  source = f"https://reddit.com{permalink}" if permalink else item.original.url or ""
+
+  header = (
+    f"📰 <b>{item.original.title}</b>\n"
+    f"<i>{item.original.content[:200] + '...' if item.original.content and len(item.original.content) > 200 else item.original.content or ''}</i>\n"
+    f"🔗 Source: {source}\n"
+    f"\n"
+  )
+
+  item.draft = header + "\n---\n".join(
+    [f"<b>Option {i+1}</b>\n{d.intro}\n{d.bridge}\n\n<i>{d.image_draft}</i>" for i, d in enumerate(drafts)]
+  )
+  return item
+
 async def run_generate_image(item: NewsItem, draft_index: int) -> NewsItem:
   if not item.drafts:
     raise ValueError("No drafts found on item")
