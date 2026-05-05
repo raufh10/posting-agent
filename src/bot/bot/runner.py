@@ -82,6 +82,7 @@ async def run_generate_image(item: NewsItem, draft_index: int) -> NewsItem:
   prompt = f"{chosen.intro}\n{chosen.bridge}\n{chosen.image_draft}"
   result = await Runner.run(llm.get_artist(), prompt)
 
+  # extract image
   image_b64: str | None = None
   for new_item in result.new_items:
     if _get_field(new_item, "type") != "tool_call_item":
@@ -106,8 +107,13 @@ async def run_generate_image(item: NewsItem, draft_index: int) -> NewsItem:
 
   logger.info("Image saved to %s size=%s", image_path, os.path.getsize(image_path))
 
+  permalink = None
+  if item.original.metadata and isinstance(item.original.metadata, dict):
+    permalink = item.original.metadata.get("permalink")
+  source = f"https://reddit.com{permalink}" if permalink else item.original.url or ""
+
   item.image_path = image_path
-  item.draft = f"{chosen.intro}\n\n{chosen.bridge}"
+  item.draft = f"{chosen.intro}\n\n{chosen.bridge}\n\n🔗 Source: {source}"
   return item
 
 async def run_post_all(session: SessionCache, user_id: int) -> list[str]:
