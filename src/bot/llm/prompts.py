@@ -23,6 +23,7 @@ Tone Guidelines:
 - Avoid corporate buzzwords like "leverage", "synergy", "game-changer", "revolutionary".
 
 Constraints:
+- Always remember the reddit posts are not mine its from anonymous reddit users.
 - Provide exactly 3 options in 'draft_options'.
 - Each intro must be under 60 words.
 - The 'explanation' must be exactly one sentence summarizing the strategic difference between the 3 directions.
@@ -45,6 +46,7 @@ Brand & Style:
 - Maintain a clean and modern aesthetic — think editorial design for a professional LinkedIn audience.
 - Use generous whitespace and clear visual hierarchy.
 - Subtle decorative textures or noise are allowed as long as they enhance the visual without cluttering the layout.
+- Avoid align Headline and Sub-copy in left side of image
 
 Strict Prohibitions:
 - DO NOT include any company logos, brand marks, product icons, or third-party symbols of any kind — except the LinkedIn logo used solely as a profile handle indicator in the watermark. This is non-negotiable.
